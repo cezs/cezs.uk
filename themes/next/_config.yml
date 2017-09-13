@@ -317,7 +317,7 @@ han: false
 
 # Disqus
 disqus:
-  enable: false
+  enable: true
   shortname: cezarystankiewicz
   count: true
 
