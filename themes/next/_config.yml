@@ -318,7 +318,7 @@ han: false
 # Disqus
 disqus:
   enable: true
-  shortname: cezarystankiewicz
+  shortname: cezs-uk
   count: true
 
 # Hypercomments
