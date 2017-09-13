@@ -1,7 +1,9 @@
 ---
 title: Common Deep Neural Network Components and Techniques
 date: 2017-09-13 13:21:00
-tags:
+mathjax: true
+tags: 
+comment: true
 ---
 
 <a id="org44ef66e"></a>
