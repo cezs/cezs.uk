@@ -78,4 +78,18 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: netlify
+  token: b50ed8795b14011b5276923a601d10339bd5ffe4f1acb9a8afd8f46e1ad9b514
+  site_id: 531e49d2-78cb-4be3-8269-28f0d718586a
+
+math:
+  engine: 'mathjax' # or 'katex'
+  # mathjax:
+  #   src: custom_mathjax_source
+  #   config:
+  #     # MathJax config
+  # katex:
+  #   css: custom_css_source
+  #   js: custom_js_source # not used
+  #   config:
+  #     # KaTeX config
