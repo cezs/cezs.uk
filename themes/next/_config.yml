@@ -78,9 +78,9 @@ menu_icons:
 
 # Schemes
 scheme: Muse
-#scheme: Mist
-#scheme: Pisces
-#scheme: Gemini
+# scheme: Mist
+# scheme: Pisces
+# scheme: Gemini
 
 
 # ---------------------------------------------------------------
@@ -317,7 +317,7 @@ han: false
 
 # Disqus
 disqus:
-  enable: true
+  enable: false
   shortname: cezs-uk
   count: true
 
