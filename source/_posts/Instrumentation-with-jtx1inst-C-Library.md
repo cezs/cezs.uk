@@ -1,7 +1,11 @@
 ---
 title: Instrumentation with jtx1inst C Library
 date: 2017-09-13 14:07:10
-tags:
+tags: 
+- Nvidia
+- Jetson
+- I2C
+- C
 ---
 
 <a id="org1930f7f"></a>
@@ -14,14 +18,13 @@ Both Jetson TX1 module and carrier board are each equipped with INA3221 current 
 
 Using the sysfs file `/sys/class/thermal/thermal_zone*/type`, we are able to retrieve information about the following zones: `AO-therm`, `CPU-therm`, `GPU-therm`, `PLL-therm`, `PMIC-Die`, `Tdiode_tegra`, `Tboard_tegra` and `thermal-fan-est.46`. Each zone ending in `-therm` provides information from sensors located on SoC, while those ending in `_tegra` are located on module. Throughout the experiments we will only concentrate temperature values available from debugfs files located at `/sys/kernel/debug/tegra_soctherm/`, namely CPU, GPU, memory I/O, and PLL temperatures.
 
-We also use sysfs files, in order to take voltage, current or power measurements from carrier board's 3 channel INA3221 monitor. We access rails of main carrier board power input `VDD_MUX`,f main carrier board 5V supply `VDD_5V_IO_SYS`, main carrier board 3.3V supply `VDD_3V3_SYS` through the I2C address of `0x42`. At the `0x43` address, there are rails for carrier board 3.3V sleep supply `VDD_3V3_IO`, main carrier board 1.8V supply `VDD_1V8_IO` and 3.3V supply for M.2 Key E connector `VDD_M2_IN`. 
-At the time of writing, there are no sysfs files for module's INA3221 monitor and we access the information located at the I2C address of `0x40`, namely main module power input `VDD_IN`, GPU Power rail `VDD_GPU` and CPU Power rail `VDD_CPU` through custom userspace functions. 
+We also use sysfs files, in order to take voltage, current or power measurements from carrier board's 3 channel INA3221 monitor. We access rails of main carrier board power input `VDD_MUX`, main carrier board 5V supply `VDD_5V_IO_SYS`, main carrier board 3.3V supply `VDD_3V3_SYS` through the I2C address of `0x42`. At the `0x43` address, there are rails for carrier board 3.3V sleep supply `VDD_3V3_IO`, main carrier board 1.8V supply `VDD_1V8_IO` and 3.3V supply for M.2 Key E connector `VDD_M2_IN`. **At the time of writing, there are no sysfs files for module's INA3221 monitor and we access the information located at the I2C address of `0x40`, namely main module power input `VDD_IN`, GPU Power rail `VDD_GPU` and CPU Power rail `VDD_CPU` through custom userspace functions.** 
 
 The sysfs files can be also employed for the system-level control of Jetson TX1 performance. In order to control CPU performance we can manually change pattern of each of four cores utilisation by either enabling or disabling each of the cores or by changing their operating frequency. We can also control GPU system-level performance  by either changing it's operating frequency or changing the operating rate of it's memory. We encapsulate the aforementioned operations in open-sourced C API and provide on-line documentation . 
 
 The current version of the API supplies among the others the following functions:
 
--   `jtx1_get_temp` for reading on-chip and on-module temperature. It takes two arguments, first argument is one of the zones which are indexed with `jtx1_tzone` enumeration (see table [1](#org6d2193b)), and second is reference to a variable that is going to store the actual value of temperature read from sensor specified in first of the arguments. The temperature value is output in millidegree Celsius.
+`jtx1_get_temp` for reading on-chip and on-module temperature. It takes two arguments, first argument is one of the zones which are indexed with `jtx1_tzone` enumeration (see table [1](#org6d2193b)), and second is reference to a variable that is going to store the actual value of temperature read from sensor specified in first of the arguments. The temperature value is output in millidegree Celsius.
 
 | thermal zone   | description            |
 |----------------|:-----------------------|
@@ -34,7 +37,7 @@ The current version of the API supplies among the others the following functions
 | `TBOARD`       | on-module thermal zone |
 | `FAN`          | on-chip thermal zone   |
 
--   `jtx1_get_ina3221` for reading on-board and on-module INA3221's values. This function currently uses sysf files to access on-board INA3221 sensor and userspace I2C to access on-module INA3221 sensor and read power, current, and voltage information. It takes three arguments: rail which is indexed by `jtx1_rail` enumeration, second parameter specifies the type of measurement which can be either `VOLTAGE`, `POWER` or `CURRENT` value from `jtx1_rail_type` enumeration (see table [2](#org3530ef2), and third is the actual output's reference where value is given either in millivolts, milliwatts or milliamps depending on the setting of the second argument.
+`jtx1_get_ina3221` for reading on-board and on-module INA3221's values. This function currently uses sysf files to access on-board INA3221 sensor and userspace I2C to access on-module INA3221 sensor and read power, current, and voltage information. It takes three arguments: rail which is indexed by `jtx1_rail` enumeration, second parameter specifies the type of measurement which can be either `VOLTAGE`, `POWER` or `CURRENT` value from `jtx1_rail_type` enumeration (see table [2](#org3530ef2), and third is the actual output's reference where value is given either in millivolts, milliwatts or milliamps depending on the setting of the second argument.
 
 | rail            | description                       |
 |-----------------|-------------------------------------|
@@ -48,7 +51,7 @@ The current version of the API supplies among the others the following functions
 | `VDD_1V8_IO`    | main carrier board 1.8V supply      |
 | `VDD_M2_IN`     | 3.3V supply for M.2 Key E connector |
 
--   `jtx1_get_rate` and `jtx1_set_rate` allowing to either set or get value of the frequency of either the external memory controller (EMC), the graphics processing unit (GPU) or one of the four available CPU cores. As the first argument both functions take one of the available choices specified in `jtx1_unit` enumeration (see table [3](#org71a0ab9)).
+`jtx1_get_rate` and `jtx1_set_rate` allowing to either set or get value of the frequency of either the external memory controller (EMC), the graphics processing unit (GPU) or one of the four available CPU cores. As the first argument both functions take one of the available choices specified in `jtx1_unit` enumeration (see table [3](#org71a0ab9)).
 
 | unit        | definition                                |
 |-------------|---------------------------------------------|

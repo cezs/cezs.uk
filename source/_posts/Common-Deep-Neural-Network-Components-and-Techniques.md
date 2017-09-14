@@ -3,6 +3,7 @@ title: Common Deep Neural Network Components and Techniques
 date: 2017-09-13 13:21:00
 mathjax: true
 tags: 
+- Deep Learning
 comment: true
 ---
 
