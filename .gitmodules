@@ -1,9 +1,3 @@
 [submodule "themes/next"]
 	path = themes/next
 	url = https://github.com/iissnan/hexo-theme-next
-[submodule "themes/maupassant"]
-	path = themes/maupassant
-	url = https://github.com/tufu9441/maupassant-hexo.git
-[submodule "themes/landscape"]
-	path = themes/landscape
-	url = https://github.com/hexojs/hexo-theme-landscape.git
